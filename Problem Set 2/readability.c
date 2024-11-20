@@ -1,4 +1,3 @@
-
 #include <ctype.h>
 #include <cs50.h>
 #include <math.h>
@@ -11,18 +10,17 @@ int count_sentences(string text);
 
 int main(void)
 {
-    // Prompt for text
+    // prompt for text
     string text = get_string("Text: ");
     
-    // Calculate number of letters, words, and sentences
+    // calculate number of letters, words and sentences
     int letters = count_letters(text);
     int words = count_words(text);
     int sentences = count_sentences(text);
+        
+    int index = round(0.0588 * ((double)letters / words * 100) - 0.296 * ((double)sentences / words * 100));
+
     
-    // Compute Coleman-Liau index
-    int index = round(0.0588 * ((float) letters / words * 100) - 0.296 * ((float) sentences / words * 100));
-    
-    // Print grade level
     if (index < 1)
     {
         printf("Before Grade 1\n");
@@ -40,10 +38,9 @@ int main(void)
 int count_letters(string text)
 {
     int lettercount = 0;
-    for (int i = 0, n = strlen(text); i < n; i++)
-    {
+    for(int i = 0, n = strlen(text); i < n; i++){
         char character = text[i];
-        if (isalnum(character))  // Check if alphanumeric
+        if (isalpha(character)) 
         {
             lettercount++;
         }
@@ -52,13 +49,13 @@ int count_letters(string text)
 }
 
 int count_words(string text)
-{
-    int wordcount = 1;
+{   
+    int wordcount = 1; // always at least one word, eg "car" or "brother-in-law"
     
     for (int i = 0, n = strlen(text); i < n; i++)
     {
         char character = text[i];
-        if (isspace(character)) // Check for whitespace
+        if (isspace(character))
         {
             wordcount++;
         }
@@ -68,16 +65,15 @@ int count_words(string text)
 
 int count_sentences(string text)
 {
-    int sentence_count = 0;
+    int sentencecount = 1;
     
     for (int i = 0, n = strlen(text); i < n; i++)
     {
         char character = text[i];
-        if (character == '.' || character == '!' || character == '?') // Sentence-ending punctuation
+        if (text[i] == 46 || text[i] == 33 || text[i] == 63)
         {
-            sentence_count++;
+            sentencecount++;
         }
     }
-    return sentence_count;
+    return sentencecount;
 }
-
