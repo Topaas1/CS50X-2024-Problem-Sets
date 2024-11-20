@@ -17,10 +17,10 @@ int main(void)
     int letters = count_letters(text);
     int words = count_words(text);
     int sentences = count_sentences(text);
-        
+    // calculate index
     int index = round(0.0588 * ((double)letters / words * 100) - 0.296 * ((double)sentences / words * 100));
 
-    
+    // print the index according to the Grade levels
     if (index < 1)
     {
         printf("Before Grade 1\n");
